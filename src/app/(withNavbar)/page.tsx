@@ -1,23 +1,16 @@
 'use client';
-import Spinner from '@/components/Spinner';
-import { useAuth } from '@/contexts/AuthContext';
+
+import SearchBar from '@/components/SearchBar';
+import { Container, Typography } from '@mui/material';
 
 export default function HomePage() {
-  const { user, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <Spinner fullPage/>;
-  }
-
-  if (!user) {
-    return null; // Prevent rendering anything before redirect
-  }
 
   return (
-    <main style={{ padding: '2rem' }}>
-      <h1>Welcome, {user.displayName}!</h1>
-      <p>This is the home page. Trendy movie thumbnails will go here.</p>
-      {/* TODO: Add MovieList components */}
-    </main>
+    <Container component="main" maxWidth="md" sx={{ py: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Find Your Next Movie
+      </Typography>
+      <SearchBar />
+    </Container>
   );
 }

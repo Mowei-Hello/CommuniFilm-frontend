@@ -4,7 +4,7 @@
  * @param token Optional Bearer token for authentication 
  * @returns 
  */
-export async function apiFetcher(url: string, token?: string) {
+export const apiFetcher = async ([url, token]: [string, string?]) => {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };
@@ -18,14 +18,15 @@ export async function apiFetcher(url: string, token?: string) {
 
   if (!res.ok) {
     const error = new Error('An error occurred while fetching the data.');
-    // Attach extra info to the error object.
-    const errorInfo = await res.json().catch(() => ({}));
-    (error as any).info = errorInfo;
+    try {
+      (error as any).info = await res.json();
+    } catch (e) {
+      (error as any).info = await res.text();
+    }
     (error as any).status = res.status;
     throw error;
   }
 
-  // Handle cases where the response might be empty
   const contentType = res.headers.get("content-type");
   if (contentType && contentType.indexOf("application/json") !== -1) {
     return res.json();
