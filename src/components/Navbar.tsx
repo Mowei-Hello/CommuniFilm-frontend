@@ -43,6 +43,11 @@ export default function Navbar() {
             <span style={{ marginRight: '1rem' }}>
               Welcome, {user.displayName}!
             </span>
+
+            <button><Link href="/profile" style={{...buttonStyles, marginRight: '0.75rem' }}>
+              Profile
+            </Link></button>
+
             <button onClick={logout} style={buttonStyles}>
               Logout
             </button>
