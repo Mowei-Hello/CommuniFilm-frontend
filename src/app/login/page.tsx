@@ -6,20 +6,11 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '@/contexts/AuthContext';
 import toast from 'react-hot-toast';
 import { Orbitron } from 'next/font/google';
-import {
-  Box,
-  Container,
-  Typography,
-  Paper,
-  CircularProgress,
-} from '@mui/material';
+import { Box, Container, Typography, Paper,
+  CircularProgress } from '@mui/material';
 
 // Load Orbitron font via Next Font
-const orbitron = Orbitron({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  display: 'swap',
-});
+const orbitron = Orbitron( { subsets: ['latin'], weight: ['400', '500', '700'], display: 'swap', });
 
 export default function LoginPage() {
   const { handleLoginSuccess } = useAuth();

@@ -34,7 +34,7 @@ export default function Navbar() {
     <nav style={navStyles}>
       <div>
         <Link href="/" style={{...linkStyles, fontWeight: 'bold' }}>
-          Communifilm
+          CommuniFilm
         </Link>
       </div>
       <div>
