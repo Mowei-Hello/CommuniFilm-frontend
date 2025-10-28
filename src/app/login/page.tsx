@@ -5,10 +5,24 @@ import Image from 'next/image';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '@/contexts/AuthContext';
 import toast from 'react-hot-toast';
+import { Orbitron } from 'next/font/google';
+import {
+  Box,
+  Container,
+  Typography,
+  Paper,
+  CircularProgress,
+} from '@mui/material';
+
+// Load Orbitron font via Next Font
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
+});
 
 export default function LoginPage() {
   const { handleLoginSuccess } = useAuth();
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -19,59 +33,109 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-black px-4"> {/* 🆕 set pure black background */}
-      <div className="w-full max-w-sm rounded-2xl bg-black p-10 text-center shadow-xl"> {/* 🆕 removed border & neutral tints */}
+    <Box
+      sx={{
+        minHeight: '100vh',
+        bgcolor: 'black',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        px: 2,
+        textAlign: 'center',
+        fontFamily: orbitron.style.fontFamily,
+      }}
+    >
+      {/* Logo */}
+      <Image
+        src="/CommuniFilm_Logo.svg"
+        alt="CommuniFilm Logo"
+        width={420}
+        height={375}
+        unoptimized
+        priority
+        style={{ marginBottom: '1rem', objectFit: 'contain' }}
+      />
 
-        
-        {/* Logo */}
-        <Image
-          src="/CommuniFIlm_Logo.png"
-          alt="CommuniFilm Logo"
-          width={290}
-          height={9}
-          className="mx-auto mb-6"
-        />
-
-        {/* Headline */}
-        <h1 className="text-3xl font-semibold mb-3 text-white">Welcome to CommuniFilm</h1>
-        <p className="text-neutral-400 mb-6">Please sign in with Google</p>
-
-        {/* Google Login Button */}
-        <div className={`transition-all ${loading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
-          <GoogleLogin
-            onSuccess={(res) => {
-              setLoading(true);
-              handleLoginSuccess(res);
-              setLoading(false);
+      {/* Login Box */}
+      <Container maxWidth="xs">
+        <Paper
+          elevation={8}
+          sx={{
+            p: 4,
+            bgcolor: 'black',
+            borderRadius: 3,
+            boxShadow: '0 0 50px rgba(160, 16, 60, 0.5)',
+            color: '#fff',
+            mt: -3
+          }}
+        >
+          <Typography
+            variant="h4"
+            fontWeight={700}
+            gutterBottom
+            sx={{
+              WebkitTextStroke: '1px #a0103c',
+              color: '#fff',
             }}
-            onError={handleLoginError}
-          />
-        </div>
+          >
+            Welcome to CommuniFilm
+          </Typography>
 
-        {/* Loading Indicator */}
-        {loading && (
-          <p className="mt-3 text-neutral-400 text-sm">Signing you in…</p>
-        )}
+          <Typography
+            variant="body1"
+            sx={{
+              mb: 3,
+              color: '#e8b8c4',
+              WebkitTextStroke: '0.5px #a0103c',
+            }}
+          >
+            Please sign in with Google
+          </Typography>
 
-        {/* Inline Error Message */}
-        {error && (
-          <p className="mt-3 text-red-400 text-sm" role="alert">
-            {error}
-          </p>
-        )}
+          {/* Google Login */}
+          <Box
+            sx={{
+              opacity: loading ? 0.5 : 1,
+              pointerEvents: loading ? 'none' : 'auto',
+              transition: 'opacity 0.3s ease',
+              display: 'inline-block',
+              '&:hover': {
+                backgroundColor: '#1a1a1a',
+                borderRadius: 1,
+              },
+              p: '2px',
+            }}
+          >
+            <GoogleLogin
+              onSuccess={(res) => {
+                setLoading(true);
+                handleLoginSuccess(res);
+                setLoading(false);
+              }}
+              onError={handleLoginError}
+            />
+          </Box>
 
-        {/* Privacy / Terms Note */}
-        <p className="mt-6 text-xs text-neutral-500">
-          By signing in, you agree to our{' '}
-          <a href="#" className="underline hover:text-neutral-300">
-            Terms
-          </a>{' '}
-          and{' '}
-          <a href="#" className="underline hover:text-neutral-300">
-            Privacy Policy
-          </a>.
-        </p>
-      </div>
-    </main>
+          {/* Loading Spinner */}
+          {loading && (
+            <Box sx={{ mt: 2 }}>
+              <CircularProgress size={24} sx={{ color: '#a0103c' }} />
+            </Box>
+          )}
+
+          {/* Error Message */}
+          {error && (
+            <Typography
+              color="#ff5a88"
+              variant="body2"
+              sx={{ mt: 2, fontWeight: 500 }}
+            >
+              {error}
+            </Typography>
+          )}
+        </Paper>
+      </Container>
+    </Box>
   );
 }
