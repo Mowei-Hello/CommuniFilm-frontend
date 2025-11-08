@@ -10,7 +10,7 @@ interface SearchResultsModalProps {
 }
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -30,7 +30,7 @@ export default function SearchResultsModal({ query, open, onClose }: SearchResul
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
         <Typography variant="h6" component="h2" gutterBottom>
-          Search Results for "{query}"
+          Search Results for &quot;{query}&quot;
         </Typography>
         {isLoading && <Spinner />}
         {error && <Typography color="error">Failed to load search results.</Typography>}
