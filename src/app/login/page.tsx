@@ -6,14 +6,15 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '@/contexts/AuthContext';
 import toast from 'react-hot-toast';
 import { Orbitron } from 'next/font/google';
-import { Box, Container, Typography, Paper,
-  CircularProgress } from '@mui/material';
+import { Box, Container, Typography, Paper, CircularProgress, useTheme } from '@mui/material';
+import LightDarkToggle from '@/components/LightDarkToggle';
 
 // Load Orbitron font via Next Font
 const orbitron = Orbitron( { subsets: ['latin'], weight: ['400', '500', '700'], display: 'swap', });
 
 export default function LoginPage() {
   const { handleLoginSuccess } = useAuth();
+  const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -27,7 +28,7 @@ export default function LoginPage() {
     <Box
       sx={{
         minHeight: '100vh',
-        bgcolor: 'black',
+        bgcolor: 'background.default',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -35,8 +36,20 @@ export default function LoginPage() {
         px: 2,
         textAlign: 'center',
         fontFamily: orbitron.style.fontFamily,
+        position: 'relative',
       }}
     >
+      {/* Dark mode toggle - top right */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 16,
+          right: 16,
+        }}
+      >
+        <LightDarkToggle />
+      </Box>
+
       {/* Logo */}
       <Image
         src="/CommuniFilm_Logo.svg"
@@ -45,7 +58,7 @@ export default function LoginPage() {
         height={375}
         unoptimized
         priority
-        style={{ marginBottom: '1rem', objectFit: 'contain' }}
+        style={{ marginBottom: '3rem', objectFit: 'contain' }}
       />
 
       {/* Login Box */}
@@ -54,11 +67,9 @@ export default function LoginPage() {
           elevation={8}
           sx={{
             p: 4,
-            bgcolor: 'black',
+            bgcolor: 'background.paper',
             borderRadius: 3,
-            boxShadow: '0 0 50px rgba(160, 16, 60, 0.5)',
-            color: '#fff',
-            mt: -3
+            boxShadow: `0 0 50px ${theme.palette.primary.main}80`,
           }}
         >
           <Typography
@@ -66,8 +77,7 @@ export default function LoginPage() {
             fontWeight={700}
             gutterBottom
             sx={{
-              WebkitTextStroke: '1px #a0103c',
-              color: '#fff',
+              color: 'primary.main',
             }}
           >
             Welcome to CommuniFilm
@@ -77,8 +87,7 @@ export default function LoginPage() {
             variant="body1"
             sx={{
               mb: 3,
-              color: '#e8b8c4',
-              WebkitTextStroke: '0.5px #a0103c',
+              color: 'text.secondary',
             }}
           >
             Please sign in with Google
@@ -92,7 +101,7 @@ export default function LoginPage() {
               transition: 'opacity 0.3s ease',
               display: 'inline-block',
               '&:hover': {
-                backgroundColor: '#1a1a1a',
+                backgroundColor: 'action.hover',
                 borderRadius: 1,
               },
               p: '2px',
@@ -111,14 +120,14 @@ export default function LoginPage() {
           {/* Loading Spinner */}
           {loading && (
             <Box sx={{ mt: 2 }}>
-              <CircularProgress size={24} sx={{ color: '#a0103c' }} />
+              <CircularProgress size={24} sx={{ color: 'primary.main' }} />
             </Box>
           )}
 
           {/* Error Message */}
           {error && (
             <Typography
-              color="#ff5a88"
+              color="error"
               variant="body2"
               sx={{ mt: 2, fontWeight: 500 }}
             >

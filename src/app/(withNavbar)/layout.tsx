@@ -2,9 +2,11 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Spinner from '@/components/Spinner';
+import FloatingChatButton from '@/components/FloatingChatButton';
+import ChatDrawer from '@/components/ChatDrawer';
 
 export default function MainLayout({
   children,
@@ -13,6 +15,7 @@ export default function MainLayout({
 }) {
   const { user, isLoading } = useAuth();
   const router = useRouter();
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     // If loading is finished and there's no user, redirect to login
@@ -32,6 +35,8 @@ export default function MainLayout({
       <div>
         <Navbar />
         {children}
+        <FloatingChatButton onClick={() => setChatOpen(true)} />
+        <ChatDrawer open={chatOpen} onClose={() => setChatOpen(false)} />
       </div>
     );
   }
