@@ -2,62 +2,80 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+} from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LightDarkToggle from './LightDarkToggle';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
 
-  const navStyles: React.CSSProperties = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '1rem 2rem',
-    backgroundColor: '#f8f8f8',
-    borderBottom: '1px solid #ddd',
-  };
-
-  const linkStyles: React.CSSProperties = {
-    textDecoration: 'none',
-    color: '#333',
-    margin: '0 0.5rem',
-  };
-
-  const buttonStyles: React.CSSProperties = {
-    padding: '0.5rem 1rem',
-    cursor: 'pointer',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    backgroundColor: 'transparent',
-  };
-
-
   return (
-    <nav style={navStyles}>
-      <div>
-        <Link href="/" style={{...linkStyles, fontWeight: 'bold' }}>
-          CommuniFilm
+    <AppBar position="sticky" color="default" elevation={1}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        {/* Logo/Brand */}
+        <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              fontWeight: 700,
+              cursor: 'pointer',
+              color: 'primary.main',
+              '&:hover': {
+                opacity: 0.8,
+              },
+            }}
+          >
+            CommuniFilm
+          </Typography>
         </Link>
-      </div>
-      <div>
-        {user ? (
-          <>
-            <span style={{ marginRight: '1rem' }}>
-              Welcome, {user.displayName}!
-            </span>
 
-            <button><Link href="/profile" style={{...buttonStyles, marginRight: '0.75rem' }}>
-              Profile
-            </Link></button>
+        {/* Right side actions */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          {/* Dark mode toggle */}
+          <LightDarkToggle />
 
-            <button onClick={logout} style={buttonStyles}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <Link href="/login" style={linkStyles}>
-            Login
-          </Link>
-        )}
-      </div>
-    </nav>
+          {user ? (
+            <>
+              <Typography variant="body2" sx={{ mr: 1, display: { xs: 'none', sm: 'block' } }}>
+                Welcome, {user.displayName}!
+              </Typography>
+
+              <Link href="/profile" passHref style={{ textDecoration: 'none' }}>
+                <Button
+                  variant="outlined"
+                  startIcon={<PersonIcon />}
+                  size="small"
+                >
+                  Profile
+                </Button>
+              </Link>
+
+              <Button
+                variant="contained"
+                startIcon={<LogoutIcon />}
+                onClick={logout}
+                size="small"
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Link href="/login" passHref style={{ textDecoration: 'none' }}>
+              <Button variant="contained" size="small">
+                Login
+              </Button>
+            </Link>
+          )}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }

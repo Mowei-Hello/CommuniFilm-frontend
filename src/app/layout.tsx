@@ -1,6 +1,7 @@
 'use client';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import { Toaster } from 'react-hot-toast';
 import './globals.css';
 import { ReactNode } from 'react';
@@ -21,12 +22,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <GoogleOAuthProvider clientId={googleClientId}>
-          <AuthProvider>
-            <Toaster position="top-right" />
-            {children}
-          </AuthProvider>
-        </GoogleOAuthProvider>
+        <ThemeProvider>
+          <GoogleOAuthProvider clientId={googleClientId}>
+            <AuthProvider>
+              <Toaster position="top-right" />
+              {children}
+            </AuthProvider>
+          </GoogleOAuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
