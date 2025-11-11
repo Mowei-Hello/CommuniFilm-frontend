@@ -1,5 +1,5 @@
 import { Fab, Tooltip, Badge } from '@mui/material';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 
 interface FloatingChatButtonProps {
   onClick: () => void;
@@ -7,7 +7,29 @@ interface FloatingChatButtonProps {
 
 export default function FloatingChatButton({ onClick }: FloatingChatButtonProps) {
   return (
-    <Tooltip title="Chat with AI Assistant" placement="left">
+    <Tooltip
+      title="Chat with Filmi"
+      placement="left"
+      arrow
+      slotProps={{
+        tooltip: {
+          sx: {
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            px: 2,
+            py: 1,
+            boxShadow: 3,
+          },
+        },
+        arrow: {
+          sx: {
+            color: 'primary.main',
+          },
+        },
+      }}
+    >
       <Fab
         color="primary"
         aria-label="chat"
@@ -25,7 +47,6 @@ export default function FloatingChatButton({ onClick }: FloatingChatButtonProps)
         }}
       >
         <Badge
-          badgeContent="AI"
           color="secondary"
           sx={{
             '& .MuiBadge-badge': {
@@ -36,7 +57,7 @@ export default function FloatingChatButton({ onClick }: FloatingChatButtonProps)
             },
           }}
         >
-          <SmartToyIcon />
+          <TheaterComedyIcon />
         </Badge>
       </Fab>
     </Tooltip>
