@@ -9,8 +9,7 @@ import { Orbitron } from 'next/font/google';
 import { Box, Container, Typography, Paper, CircularProgress, useTheme } from '@mui/material';
 import LightDarkToggle from '@/components/LightDarkToggle';
 
-// Load Orbitron font via Next Font
-const orbitron = Orbitron( { subsets: ['latin'], weight: ['400', '500', '700'], display: 'swap', });
+const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '500', '700'], display: 'swap' });
 
 export default function LoginPage() {
   const { handleLoginSuccess } = useAuth();
@@ -28,7 +27,7 @@ export default function LoginPage() {
     <Box
       sx={{
         minHeight: '100vh',
-        bgcolor: 'background.default',
+        bgcolor: '#000',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -39,7 +38,6 @@ export default function LoginPage() {
         position: 'relative',
       }}
     >
-      {/* Dark mode toggle - top right */}
       <Box
         sx={{
           position: 'absolute',
@@ -50,7 +48,6 @@ export default function LoginPage() {
         <LightDarkToggle />
       </Box>
 
-      {/* Logo */}
       <Image
         src="/CommuniFilm_Logo.svg"
         alt="CommuniFilm Logo"
@@ -58,18 +55,19 @@ export default function LoginPage() {
         height={375}
         unoptimized
         priority
-        style={{ marginBottom: '3rem', objectFit: 'contain' }}
+        style={{ marginBottom: '1rem', objectFit: 'contain' }}
       />
 
-      {/* Login Box */}
       <Container maxWidth="xs">
         <Paper
-          elevation={8}
+          elevation={0}
           sx={{
             p: 4,
-            bgcolor: 'background.paper',
+            background: 'rgba(10, 10, 10, 0.35)',
+            backdropFilter: 'blur(10px)',
             borderRadius: 3,
-            boxShadow: `0 0 50px ${theme.palette.primary.main}80`,
+            border: '1px solid rgba(255, 0, 150, 0.3)',
+            boxShadow: '0 0 25px 4px rgba(255, 0, 150, 0.4)',
           }}
         >
           <Typography
@@ -93,7 +91,6 @@ export default function LoginPage() {
             Please sign in with Google
           </Typography>
 
-          {/* Google Login */}
           <Box
             sx={{
               opacity: loading ? 0.5 : 1,
@@ -117,20 +114,14 @@ export default function LoginPage() {
             />
           </Box>
 
-          {/* Loading Spinner */}
           {loading && (
             <Box sx={{ mt: 2 }}>
               <CircularProgress size={24} sx={{ color: 'primary.main' }} />
             </Box>
           )}
 
-          {/* Error Message */}
           {error && (
-            <Typography
-              color="error"
-              variant="body2"
-              sx={{ mt: 2, fontWeight: 500 }}
-            >
+            <Typography color="error" variant="body2" sx={{ mt: 2, fontWeight: 500 }}>
               {error}
             </Typography>
           )}
