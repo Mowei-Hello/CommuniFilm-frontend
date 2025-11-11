@@ -6,6 +6,6 @@ import { MovieReview } from '@/types';
 export function useMovieReviews(movieId: string | null) {
   const { token } = useAuth();
   const key = movieId && token ? [`/reviews/movie/${movieId}`, token] : null;
-  const { data, error, isLoading } = useSWR<MovieReview[]>(key, apiFetcher);
-  return { reviews: data, error, isLoading };
+  const { data, error, isLoading, mutate } = useSWR<MovieReview[]>(key, apiFetcher);
+  return { reviews: data, error, isLoading, mutate };
 }
