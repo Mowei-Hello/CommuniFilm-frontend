@@ -99,7 +99,7 @@ export default function ChatDrawer({ open, onClose }: ChatDrawerProps) {
           flex: 1,
           overflowY: 'auto',
           p: 2,
-          bgcolor: 'grey.50',
+          bgcolor: 'background.default',
           display: 'flex',
           flexDirection: 'column',
         }}
