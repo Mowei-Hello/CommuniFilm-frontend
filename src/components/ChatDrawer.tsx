@@ -13,7 +13,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import { useChat } from '@/hooks/useChat';
 import ChatMessage from './ChatMessage';
 
@@ -63,11 +63,13 @@ export default function ChatDrawer({ open, onClose }: ChatDrawerProps) {
       anchor="right"
       open={open}
       onClose={onClose}
-      PaperProps={{
-        sx: {
-          width: { xs: '100%', sm: 400, md: 480 },
-          display: 'flex',
-          flexDirection: 'column',
+      slotProps={{
+        paper: {
+          sx: {
+            width: { xs: '100%', sm: 400, md: 480 },
+            display: 'flex',
+            flexDirection: 'column',
+          },
         },
       }}
     >
@@ -83,7 +85,7 @@ export default function ChatDrawer({ open, onClose }: ChatDrawerProps) {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <SmartToyIcon />
+          <TheaterComedyIcon />
           <Typography variant="h6">CommuniFilm AI</Typography>
         </Box>
         <IconButton onClick={onClose} sx={{ color: 'inherit' }}>
@@ -116,13 +118,12 @@ export default function ChatDrawer({ open, onClose }: ChatDrawerProps) {
               gap: 2,
             }}
           >
-            <SmartToyIcon sx={{ fontSize: 64, color: 'primary.main', opacity: 0.5 }} />
+            <TheaterComedyIcon sx={{ fontSize: 64, color: 'primary.main', opacity: 0.5 }} />
             <Typography variant="h6" color="text.secondary">
-              Welcome to CommuniFilm AI!
+              Hi! I am Filmi, the CommuniFilm AI!
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 300 }}>
-              I can help you discover movies, analyze reviews, and get personalized recommendations.
-              Ask me anything!
+              I can help you discover movies, analyze reviews, and get personalized recommendations just for you!
             </Typography>
           </Box>
         ) : (
