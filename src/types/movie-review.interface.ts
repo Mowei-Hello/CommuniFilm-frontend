@@ -5,4 +5,5 @@ export interface MovieReview {
   text: string;
   createdAt: string;
   updatedAt: string;
+  replyCount?: number;
 }

@@ -18,7 +18,7 @@ export default function MovieDetailPage() {
   }
 
   const { movie, isLoading: isMovieLoading, error: movieError } = useMovieDetail(movieId);
-  const { reviews, isLoading: areReviewsLoading, error: reviewsError } = useMovieReviews(movieId);
+  const { reviews, isLoading: areReviewsLoading, error: reviewsError, mutate: mutateReviews } = useMovieReviews(movieId);
 
   // Get all unique user IDs from the reviews
   const userIds = useMemo(() => {
@@ -90,10 +90,11 @@ export default function MovieDetailPage() {
             {reviewsError && <Typography color="error">Could not load reviews.</Typography>}
             {reviews && reviews.length > 0 ? (
             reviews.map(review => (
-                <ReviewCard 
-                key={review.reviewId} 
-                review={review} 
+                <ReviewCard
+                key={review.reviewId}
+                review={review}
                 userName={userMap.get(review.userId)} // Pass the user's name
+                onReplyCreated={mutateReviews} // Refetch reviews when a reply is created
                 />
             ))
             ) : (

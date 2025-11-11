@@ -38,7 +38,7 @@ export function useChat() {
         message: userMessage,
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/agent/chat`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/agent/chat`, {
         method: 'POST',
         headers,
         body: JSON.stringify(requestBody),
@@ -86,7 +86,7 @@ export function useChat() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/agent/clear`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/agent/clear`, {
         method: 'POST',
         headers,
       });
