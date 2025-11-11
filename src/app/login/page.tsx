@@ -6,14 +6,13 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '@/contexts/AuthContext';
 import toast from 'react-hot-toast';
 import { Orbitron } from 'next/font/google';
-import { Box, Container, Typography, Paper, CircularProgress, useTheme } from '@mui/material';
+import { Box, Container, Typography, Paper, CircularProgress } from '@mui/material';
 import LightDarkToggle from '@/components/LightDarkToggle';
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '500', '700'], display: 'swap' });
 
 export default function LoginPage() {
   const { handleLoginSuccess } = useAuth();
-  const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -27,7 +26,7 @@ export default function LoginPage() {
     <Box
       sx={{
         minHeight: '100vh',
-        bgcolor: '#000',
+        bgcolor: 'background.default',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -55,7 +54,10 @@ export default function LoginPage() {
         height={375}
         unoptimized
         priority
-        style={{ marginBottom: '1rem', objectFit: 'contain' }}
+        style={{
+          marginBottom: '1rem',
+          objectFit: 'contain',
+        }}
       />
 
       <Container maxWidth="xs">
@@ -63,11 +65,13 @@ export default function LoginPage() {
           elevation={0}
           sx={{
             p: 4,
-            background: 'rgba(10, 10, 10, 0.35)',
+            bgcolor: 'background.paper',
             backdropFilter: 'blur(10px)',
             borderRadius: 3,
-            border: '1px solid rgba(255, 0, 150, 0.3)',
-            boxShadow: '0 0 25px 4px rgba(255, 0, 150, 0.4)',
+            border: (theme) => `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 0, 150, 0.3)' : 'rgba(160, 16, 60, 0.3)'}`,
+            boxShadow: (theme) => theme.palette.mode === 'dark'
+              ? '0 0 25px 4px rgba(255, 0, 150, 0.4)'
+              : '0 0 25px 4px rgba(160, 16, 60, 0.3)',
           }}
         >
           <Typography
@@ -95,11 +99,11 @@ export default function LoginPage() {
             sx={{
               opacity: loading ? 0.5 : 1,
               pointerEvents: loading ? 'none' : 'auto',
-              transition: 'opacity 0.3s ease',
+              transition: 'all 0.3s ease',
               display: 'inline-block',
+              borderRadius: 1,
               '&:hover': {
-                backgroundColor: 'action.hover',
-                borderRadius: 1,
+                bgcolor: 'action.hover',
               },
               p: '2px',
             }}
